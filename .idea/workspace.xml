@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e963d7ee-86a0-4749-8975-b1472ae97768" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/R_User_Library.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/data/README" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/data/implicit_predictions.pickle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/data/item_id_mapping" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/data/rec_dict.pickle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/data/score_dict.pickle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/data/stats" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/data/test_input.pickle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/data/test_output.pickle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/data/test_set_sequences" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/data/test_set_triplets" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/data/test_u_id.pickle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/data/train_set_sequences" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/data/train_set_sequences+" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/data/train_set_triplets" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/data/training_set_item_popularity.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/data/training_set_item_rating.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/data/true_positive.pickle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/data/true_positive_imp.pickle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/data/user_id_mapping" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/data/val_set_sequences" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/data/val_set_triplets" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/colab-ktf/Icon&#13;" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/colab-ktf/rnn_cce_ml30_bs64_ne25.189_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/colab-ktf/rnn_cce_ml30_bs64_ne27.702_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/colab-ktf/rnn_cce_ml30_bs64_ne30.227_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/colab-ktf/rnn_cce_ml30_bs64_ne32.741_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/colab-ktf/rnn_cce_ml30_bs64_ne35.264_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/colab-ktf/rnn_cce_ml30_bs64_ne37.778_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/colab-ktf/rnn_cce_ml30_bs64_ne40.303_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/colab-ktf/rnn_cce_ml30_bs64_ne42.818_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/colab-ktf/rnn_cce_ml30_bs64_ne45.341_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/colab-ktf/rnn_cce_ml30_bs64_ne47.855_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/colab-ktf/rnn_cce_ml30_bs64_ne50_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml30_bs32_ne0.16_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml30_bs32_ne0.397_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml30_bs32_ne0.477_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml30_bs32_ne0.556_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml30_bs32_ne0.636_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml30_bs32_ne0.715_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml30_bs32_ne0.795_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml30_bs32_ne11.921_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml30_bs32_ne13.908_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml30_bs32_ne19_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml30_bs32_ne2.43_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml30_bs32_ne3.242_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml30_bs32_ne3.974_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml30_bs32_ne4.054_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml30_bs32_ne4.86_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml30_bs32_ne5.672_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml30_bs32_ne5.96_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml30_bs32_ne7.947_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml30_bs32_ne9.934_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml30_bs64_ne50.0_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml50_bs64_ne104.907" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml50_bs64_ne10_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml50_bs64_ne113.65" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml50_bs64_ne122.392" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml50_bs64_ne218_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml50_bs64_ne43.711" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml50_bs64_ne52.454" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml50_bs64_ne61.196" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml50_bs64_ne69.938" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml50_bs64_ne78.681" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml50_bs64_ne87.423" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml50_bs64_ne96.165" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/ktf/rnn_cce_ml60_bs32_ne7.294_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/rnn_cce_ml50_bs1_ne0.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/rnn_cce_ml50_bs1_ne0.001" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/rnn_cce_ml50_bs64_ne0.0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/rnn_cce_ml50_bs64_ne0.001" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/rnn_cce_ml50_bs64_ne0.009" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/models/rnn_cce_ml50_bs64_ne0.017" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/recipe_embedding.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/results/README" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/results/ktf/rnn_cce_ml30_bs64_ne50.0_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/Dataset/ks-cooks-1y/results/ktf/rnn_cce_ml60_bs32_ne7.294_gc100_e8_h50_Ug_lr0.1_nt1.ktf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/RNN/helpers/data_handling.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/RNN/helpers/data_handling.py" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="data_handling.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Model/RNN/helpers/data_handling.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="435">
+              <caret line="29" column="66" lean-forward="true" selection-start-line="29" selection-start-column="66" selection-end-line="29" selection-end-column="66" />
+              <folding>
+                <element signature="e#24#55#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Model/RNN/helpers/data_handling.py" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="47" />
+    <option name="y" value="23" />
+    <option name="width" value="1167" />
+    <option name="height" value="877" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="RRS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RRS" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RRS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RRS" type="462c0819:PsiDirectoryNode" />
+              <item name="Model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RRS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RRS" type="462c0819:PsiDirectoryNode" />
+              <item name="Model" type="462c0819:PsiDirectoryNode" />
+              <item name="RNN" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e963d7ee-86a0-4749-8975-b1472ae97768" name="Default" comment="" />
+      <created>1567845869730</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1567845869730</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="47" y="23" width="1167" height="877" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Python Console" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18666667" />
+      <window_info anchor="right" id="R Packages" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="right" id="R Graphics" />
+      <window_info anchor="right" id="Database" />
+      <window_info anchor="right" id="SciView" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Model/RNN/helpers/data_handling.py</url>
+          <line>99</line>
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Model/RNN/helpers/data_handling.py</url>
+          <line>92</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="2" />
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Model/RNN/helpers/data_handling.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="29" column="66" lean-forward="true" selection-start-line="29" selection-start-column="66" selection-end-line="29" selection-end-column="66" />
+          <folding>
+            <element signature="e#24#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

@@ -3,10 +3,11 @@ from __future__ import division
 import numpy as np
 import random  # used in SequenceGenerator __call()__
 import os.path
+import os
 import datetime
 
 # Data directory
-DEFAULT_DIR = '/Users/xun/Documents/Thesis/Improving-RNN-recommendation-model/Dataset/'
+DEFAULT_DIR = os.getcwd() + '/Dataset'
 
 
 class DataHandler(object):
