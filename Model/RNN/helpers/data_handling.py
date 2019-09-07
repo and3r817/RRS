@@ -95,7 +95,7 @@ class DataHandler(object):
 		'''
 
         if os.path.exists(dirname) and not os.path.exists(DEFAULT_DIR + dirname + '/'):
-            return dirname
+            return dirname + '/'
         if not os.path.exists(dirname) and os.path.exists(DEFAULT_DIR + dirname + '/'):
             if dirname == '':
                 return DEFAULT_DIR
