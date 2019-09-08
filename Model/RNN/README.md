@@ -1,4 +1,4 @@
-# Recipe Recommender System
+# Recipe Recommender System using RNN
 Keras implementation of "[Collaborative filtering based on sequences](https://github.com/rdevooght/sequence-based-recommendations)". 
 
 For reproducibility, you can download the same preprocessed data sequence from http://iridia.ulb.ac.be/~rdevooght/rnn_cf_data.zip. 
