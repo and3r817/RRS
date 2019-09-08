@@ -1,19 +1,9 @@
-# Improving RNN based recommendtation
-Tensorflow, Keras implementation of "[Collaborative filtering based on sequences](https://github.com/rdevooght/sequence-based-recommendations)". 
-Also, theano is available in this project. 
-All methods other than RNN-Categorical cross entropy are removed to focus on improving the performance of RNN and for simplification. 
-I applied "[weight tying technique](https://pdfs.semanticscholar.org/fb26/4cfa7309c572dc1aa6e70e745367f97ef78e.pdf)" into the RNN-CCE model and it resulted it higher recall in MovieLens 1M dataset.
-This is only available in tensorflow now.
+# Recipe Recommender System
+Keras implementation of "[Collaborative filtering based on sequences](https://github.com/rdevooght/sequence-based-recommendations)". 
 
 For reproducibility, you can download the same preprocessed data sequence from http://iridia.ulb.ac.be/~rdevooght/rnn_cf_data.zip. 
-<p align="center">
-	<img width="1000" height="400" src="https://user-images.githubusercontent.com/8953934/40874985-dc9ae5fe-66b2-11e8-8d50-3339bbfc5938.png">
-</p>
-<p align="center">
-	<img width="1000" height="400" src="https://user-images.githubusercontent.com/8953934/40876662-8bb4478c-66b4-11e8-9e00-c03a922d5f50.JPG">
-</p>
 
-## Experimental results (Performed on Tensorflow)
+## Experimental results (Performed on Keras)
 | Models                      | sps                 | Recall               |
 |-----------------------------|:-------------------:|:--------------------:|
 | LSTM_vanilla(dim:50)        | 31                  | 6.2                  |
@@ -35,18 +25,15 @@ And its effectiveness starts to come out when the dimension of the hidden state 
 - h5py for saving keras model
 
 ## Installation
-This project runs on windows 10, 64bit. You can use any deeplearning framework among tensorflow, keras and theano. I used anaconda containing all of them. 
+You can use any deeplearning framework among tensorflow, keras and theano. 
 
 You can use
 ````
 pip install tensorflow-gpu
 ````
 
-And maybe mkl or numpy-mkl library is needed to run tensorflow. Also it is known that the development of theano has been stopped so I personally recommend to use tensorflow or keras with tensorflow backend.
-
 
 ## Simple Report
-It takes much more time to run with keras-either tensorflow backend or theano backend. You'd better to use raw tensorflow or theano. 
 
 The results made by rdevooght's paper seems only available in python 2. It was unable to reproduce in python3 although I copied his theano code based on python2 and modified to fit python3. But the result is reproducible in python2. The performance of models in this project is little bit lower than that of the original project.
 
@@ -55,7 +42,8 @@ The results made by rdevooght's paper seems only available in python 2. It was u
 
 ## Usage
 
-Use `-fr` option to select deeplearning framework. **'tf'** for tensorflow, **'ktf'** for keras-tensorflow backend, **'kth'** for keras-theano backend, **'th'** for theano. Available on train.py and test.py.
+Use `-fr` option to select deeplearning framework. **'tf'** for tensorflow, **'ktf'** for keras-tensorflow backend.
+Available on train.py and test.py.
 
 Example : `python train.py -fr tf`
 
