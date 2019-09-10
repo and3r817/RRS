@@ -18,7 +18,7 @@ from helpers import evaluation
 
 class RNNBase(object):
     """Base for RNN object.
-    """
+	"""
 
     def __init__(self,
                  sequence_noise=SequenceNoise(),
@@ -61,7 +61,7 @@ class RNNBase(object):
 
     def _common_filename(self, epochs):
         '''Common parts of the filename accros sub classes.
-        '''
+		'''
         filename = "ml" + str(self.max_length) + "_bs" + str(self.batch_size) + "_ne" + str(
             epochs) + "_" + self.recurrent_layer.name + "_" + self.updater.name + "_" + self.target_selection.name
 
@@ -82,7 +82,7 @@ class RNNBase(object):
 
     def top_k_recommendations(self, sequence, k=10, exclude=None):
         ''' Receives a sequence of (id, rating), and produces k recommendations (as a list of ids)
-        '''
+		'''
 
         seq_by_max_length = sequence[-min(self.max_length, len(sequence)):]  # last max length or all
 
@@ -242,7 +242,7 @@ class RNNBase(object):
     #                     current_train_cost = []
     #
     #                     # intermediate_model = Model(inputs=self.model.layers[0].input,
-    #                     #                            outputs=[l.output for l in self.model.layers[1:]])
+    #                     # 						   outputs=[l.output for l in self.model.layers[1:]])
     #
     #                     # intermediate_output = intermediate_model.predict(batch[0])
     #                     # print(intermediate_output)
@@ -366,14 +366,14 @@ class RNNBase(object):
             # print(current_train_cost)
 
             # Check if it is time to save the model
-            epochs=[10]
+            epochs=[time()-start_time]
 
             # Average train cost
             train_costs.append(np.mean(current_train_cost))
             current_train_cost = []
 
             # intermediate_model = Model(inputs=self.model.layers[0].input,
-            #                          outputs=[l.output for l in self.model.layers[1:]])
+            # 						   outputs=[l.output for l in self.model.layers[1:]])
 
             # intermediate_output = intermediate_model.predict(batch[0])
             # print(intermediate_output)
@@ -385,7 +385,6 @@ class RNNBase(object):
             self._print_progress(iterations, epochs[-1], start_time, train_costs
                                  , metrics, validation_metrics
                                  )
-
             # Save model
             run_nb = len(train_costs) - 1
             if autosave == 'All':
@@ -415,17 +414,17 @@ class RNNBase(object):
 
     def _gen_mini_batch(self, sequence_generator, test=False):
         ''' Takes a sequence generator and produce a mini batch generator.
-        The mini batch have a size defined by self.batch_size, and have format of the input layer of the rnn.
+		The mini batch have a size defined by self.batch_size, and have format of the input layer of the rnn.
 
-        test determines how the sequence is splitted between training and testing
-            test == False, the sequence is split randomly
-            test == True, the sequence is split in the middle
+		test determines how the sequence is splitted between training and testing
+			test == False, the sequence is split randomly
+			test == True, the sequence is split in the middle
 
-        if test == False, max_reuse_sequence determines how many time a single sequence is used in the same batch.
-            with max_reuse_sequence = inf, one sequence will be used to make the whole batch (if the sequence is long enough)
-            with max_reuse_sequence = 1, each sequence is used only once in the batch
-        N.B. if test == True, max_reuse_sequence = 1 is used anyway
-        '''
+		if test == False, max_reuse_sequence determines how many time a single sequence is used in the same batch.
+			with max_reuse_sequence = inf, one sequence will be used to make the whole batch (if the sequence is long enough)
+			with max_reuse_sequence = 1, each sequence is used only once in the batch
+		N.B. if test == True, max_reuse_sequence = 1 is used anyway
+		'''
         i = 0
         uid = []
         while True:
@@ -544,7 +543,7 @@ class RNNBase(object):
                         , validation_metrics
                         ):
         '''Print learning progress in terminal
-        '''
+		'''
         print(self.name, iterations, "batchs, ", epochs, " epochs in", time() - start_time, "s")
         print("Last train cost : ", train_costs[-1])
         for m in self.metrics:
@@ -557,47 +556,47 @@ class RNNBase(object):
 
     # Print on stderr for easier recording of progress
     # print(iterations, epochs, time() - start_time, train_costs[-1],
-    #     ' '.join(map(str, [metrics[m][-1] for m in self.metrics])), file=sys.stderr)
+    # 	  ' '.join(map(str, [metrics[m][-1] for m in self.metrics])), file=sys.stderr)
 
     def _get_model_filename(self, iterations):
         '''Return the name of the file to save the current model
-        '''
+		'''
         raise NotImplemented
 
     def prepare_networks(self):
         ''' Prepares the building blocks of the RNN, but does not compile them:
-        self.l_in : input layer
-        self.l_mask : mask of the input layer
-        self.target : target of the network
-        self.l_out : last output of the network
-        self.cost : cost function
+		self.l_in : input layer
+		self.l_mask : mask of the input layer
+		self.target : target of the network
+		self.l_out : last output of the network
+		self.cost : cost function
 
-        and maybe others
-        '''
+		and maybe others
+		'''
         raise NotImplemented
 
     def _compile_train_network(self):
         ''' Compile self.train.
-        self.train recieves a sequence and a target for every steps of the sequence, 
-        compute error on every steps, update parameter and return global cost (i.e. the error).
-        '''
+		self.train recieves a sequence and a target for every steps of the sequence, 
+		compute error on every steps, update parameter and return global cost (i.e. the error).
+		'''
         raise NotImplemented
 
     def _compile_predict_network(self):
         ''' Compile self.predict, the deterministic rnn that output the prediction at the end of the sequence
-        '''
+		'''
         raise NotImplemented
 
     def _save(self, filename):
         '''Save the parameters of a network into a file
-        '''
+		'''
         print('Save model in ' + filename)
         if not os.path.exists(os.path.dirname(filename)):
             os.makedirs(os.path.dirname(filename))
 
     def load_last(self, save_dir):
         '''Load last model from dir
-        '''
+		'''
 
         def extract_number_of_batches(filename):
             m = re.search('_nb([0-9]+)_', filename)
@@ -625,17 +624,17 @@ class RNNBase(object):
 
     def _load(self, filename):
         '''Load parameters values from a file
-        '''
+		'''
 
     def _input_size(self):
         ''' Returns the number of input neurons
-        '''
+		'''
         return self.n_items
 
     def _get_features(self, item):
         '''Change a tuple (item_id, rating) into a list of features to feed into the RNN
-        features have the following structure: [one_hot_encoding, personal_rating on a scale of ten, average_rating on a scale of ten, popularity on a log scale of ten]
-        '''
+		features have the following structure: [one_hot_encoding, personal_rating on a scale of ten, average_rating on a scale of ten, popularity on a log scale of ten]
+		'''
 
         one_hot_encoding = np.zeros(self.n_items)
         one_hot_encoding[item[0]] = 1
