@@ -299,7 +299,7 @@ class RNNBase(object):
               autosave='Best',
               save_dir='',
               min_iterations=0,
-              max_iter=np.inf,
+              max_iter=4,
               load_last_model=False,
               early_stopping=None,
               validation_metrics=['sps']):
@@ -349,7 +349,7 @@ class RNNBase(object):
 
             history = self.model.fit_generator(batch_generator, epochs = min_iterations, steps_per_epoch= int(progress),
                                             validation_data = val_generator, validation_steps=100,
-                                            workers = 4, use_multiprocessing = True, verbose=2)
+                                            workers = max_iter, use_multiprocessing = True, verbose=2)
             cost = history.history['loss']
 
                     # outputs = self.model.predict_on_batch(batch[0])
