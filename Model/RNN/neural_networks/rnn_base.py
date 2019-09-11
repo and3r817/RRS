@@ -9,6 +9,7 @@ import sys
 from time import time
 
 import numpy as np
+import pickle
 
 from .sequence_noise import SequenceNoise
 from .target_selection import SelectTargets
@@ -128,415 +129,102 @@ class RNNBase(object):
                 is_efficient[is_efficient] = np.any(costs[is_efficient] >= c, axis=1)
         return np.where(is_efficient)[0].tolist()
 
-    # def train(self, dataset,
-    #           max_time=np.inf,
-    #           progress=2.0,
-    #           autosave='Best',
-    #           save_dir='',
-    #           min_iterations=0,
-    #           max_iter=np.inf,
-    #           load_last_model=False,
-    #           early_stopping=None,
-    #           validation_metrics=['sps']):
-    #     '''Train the model based on the sequence given by the training_set
-    #
-    # max_time is used to set the maximumn amount of time (in seconds) that the training can last before being stop.
-    #     By default, max_time=np.inf, which means that the training will last until the training_set runs out, or the user interrupt the program.
-    #
-    # progress is used to set when progress information should be printed during training. It can be either an int or a float:
-    #     integer : print at linear intervals specified by the value of progress (i.e. : progress, 2*progress, 3*progress, ...)
-    #     float : print at geometric intervals specified by the value of progress (i.e. : progress, progress^2, progress^3, ...)
-    #
-    # max_progress_interval can be used to have geometric intervals in the begining then switch to linear intervals.
-    #     It ensures, independently of the progress parameter, that progress is shown at least every max_progress_interval.
-    #
-    # time_based_progress is used to choose between using number of iterations or time as a progress indicator. True means time (in seconds) is used, False means number of iterations.
-    #
-    # autosave is used to set whether the model should be saved during training. It can take several values:
-    #     All : the model will be saved each time progress info is printed.
-    #     Best : save only the best model so far
-    #     None : does not save
-    #
-    # min_iterations is used to set a minimum of iterations before printing the first information (and saving the model).
-    #
-    # save_dir is the path to the directory where models are saved.
-    #
-    # load_last_model: if true, find the latest model in the directory where models should be saved, and load it before starting training.
-    #
-    # early_stopping : should be a callable that will recieve the list of validation error and the corresponding epochs and return a boolean indicating whether the learning should stop.
-    # '''
-    #
-    #     self.dataset = dataset
-    #
-    #     self.target_selection.set_dataset(dataset)
-    #
-    #     if len(set(validation_metrics) & set(self.metrics.keys())) < len(validation_metrics):
-    #         raise ValueError(
-    #             'Incorrect validation metrics. Metrics must be chosen among: ' + ', '.join(self.metrics.keys()))
-    #
-    #     if self.framework == 'tf':
-    #         self.sess.run(self.init)
-    #     elif self.framework == 'th':
-    #         if not hasattr(self, 'train_function'):
-    #             self._compile_train_function()
-    #         if not hasattr(self, 'test_function'):
-    #             self._compile_test_function()
-    #
-    #     # Load last model if needed
-    #     iterations = 0
-    #     epochs_offset = 0
-    #     if load_last_model:
-    #         epochs_offset = self.load_last(save_dir)
-    #
-    #     # Make batch generator
-    #     # batch_generator = threaded_generator(self._gen_mini_batch(self.sequence_noise(dataset.training_set())))
-    #
-    #     batch_generator = self._gen_mini_batch(self.sequence_noise(self.dataset.training_set()))
-    #
-    #     start_time = time()
-    #     next_save = int(progress)
-    #     # val_costs = []
-    #     train_costs = []
-    #     current_train_cost = []
-    #     epochs = []
-    #     metrics = {name: [] for name in self.metrics.keys()}
-    #     filename = {}
-    #
-    #     try:
-    #         while time() - start_time < max_time and iterations < max_iter:
-    #
-    #             # Train with a new batch
-    #             try:
-    #                 batch = next(batch_generator)  # called prepare_input(sequence), yield X, Y
-    #                 # print('mini_batch generator', 'iteration =', iterations)
-    #                 # self.model.fit(batch[0], batch[2])
-    #
-    #                 cost = self.model.train_on_batch(batch[0],
-    #                                                      batch[1])  # called prepare_input(sequence), yield X, Y
-    #
-    #                 cost = self.model.train_on_batch(batch[0],
-    #                                                      batch[1])
-    #
-    #                 # outputs = self.model.predict_on_batch(batch[0])
-    #                 # print(output)
-    #                 # print(cost)
-    #
-    #                 if np.isnan(cost):
-    #                     raise ValueError("Cost is NaN")
-    #
-    #             except StopIteration:
-    #                 break
-    #
-    #             current_train_cost.append(cost)
-    #
-    #             # Check if it is time to save the model
-    #             iterations += 1
-    #
-    #             if iterations >= next_save:
-    #                 if iterations >= min_iterations:
-    #                     # Save current epoch
-    #                     epochs.append(epochs_offset + self.dataset.training_set.epochs)
-    #
-    #                     # Average train cost
-    #                     train_costs.append(np.mean(current_train_cost))
-    #                     current_train_cost = []
-    #
-    #                     # intermediate_model = Model(inputs=self.model.layers[0].input,
-    #                     # 						   outputs=[l.output for l in self.model.layers[1:]])
-    #
-    #                     # intermediate_output = intermediate_model.predict(batch[0])
-    #                     # print(intermediate_output)
-    #
-    #                     # Compute validation cost
-    #                     metrics = self._compute_validation_metrics(self.dataset, metrics)
-    #
-    #                     # Print info
-    #                     self._print_progress(iterations, epochs[-1], start_time, train_costs
-    #                                          , metrics, validation_metrics
-    #                                          )
-    #
-    #                     # Save model
-    #                     run_nb = len(train_costs) - 1
-    #                     if autosave == 'All':
-    #                         filename[run_nb] = save_dir + self.framework + "/" + self._get_model_filename(
-    #                             round(epochs[-1], 3))
-    #                         self._save(filename[run_nb])
-    #                     elif autosave == 'Best':
-    #                         pareto_runs = self.get_pareto_front(metrics, validation_metrics)
-    #                         if run_nb in pareto_runs:
-    #                             filename[run_nb] = save_dir + self.framework + "/" + self._get_model_filename(
-    #                                 round(epochs[-1], 3))
-    #                             self._save(filename[run_nb])
-    #                             to_delete = [r for r in filename if r not in pareto_runs]
-    #                             for run in to_delete:
-    #                                 try:
-    #                                     if self.framework == 'tf':
-    #                                         os.remove(filename[run] + ".data-00000-of-00001")
-    #                                         os.remove(filename[run] + ".index")
-    #                                         os.remove(filename[run] + ".meta")
-    #                                     else:
-    #                                         os.remove(filename[run])
-    #                                 except OSError:
-    #                                     print('Warning : Previous model could not be deleted')
-    #                                 del filename[run]
-    #
-    #                     if early_stopping is not None:
-    #                         if all([early_stopping(epochs, metrics[m]) for m in validation_metrics]):
-    #                             print('Early_Stop triggered')
-    #                             break
-    #                 next_save += progress
-    #
-    #     except KeyboardInterrupt:
-    #         print('Training interrupted')
-    #
-    #     best_run = np.argmax(
-    #         np.array(metrics[validation_metrics[0]]) * self.metrics[validation_metrics[0]]['direction'])
-    #     return ({m: metrics[m][best_run] for m in self.metrics.keys()}, time() - start_time, filename[best_run])
-
     def train(self, dataset,
-              max_time=np.inf,
-              progress=2.0,
-              autosave='Best',
-              save_dir='',
-              min_iterations=0,
-              max_iter=4,
-              load_last_model=False,
-              early_stopping=None,
-              validation_metrics=['sps']):
+                        autosave='Best',
+                        save_dir='',
+                        progress=2.0,
+                        min_iterations = 0,
+                        load_last_model=False,
+                        early_stopping=None,
+                        validation_metrics=['sps']):
 
-        self.dataset = dataset
+                  self.dataset = dataset
 
-        self.target_selection.set_dataset(dataset)
+                  self.target_selection.set_dataset(dataset)
 
-        if len(set(validation_metrics) & set(self.metrics.keys())) < len(validation_metrics):
-            raise ValueError(
-                'Incorrect validation metrics. Metrics must be chosen among: ' + ', '.join(self.metrics.keys()))
+                  if len(set(validation_metrics) & set(self.metrics.keys())) < len(validation_metrics):
+                      raise ValueError(
+                          'Incorrect validation metrics. Metrics must be chosen among: ' + ', '.join(self.metrics.keys()))
 
-        # Load last model if needed
-        iterations = 0
-        epochs_offset = 0
-        if load_last_model:
-            epochs_offset = self.load_last(save_dir)
+                  # Load last model if needed
+                  iterations = 0
 
-        # Make batch generator
-        # batch_generator = threaded_generator(self._gen_mini_batch(self.sequence_noise(dataset.training_set())))
+                  start_time = time()
 
-        batch_generator = self._gen_mini_batch(self.sequence_noise(self.dataset.training_set()))
-        val_generator = self._gen_mini_batch(self.sequence_noise(self.dataset.validation_set()))
+                  # val_costs = []
+                  train_costs = []
+                  current_train_cost = []
+                  epochs = []
+                  metrics = {name: [] for name in self.metrics.keys()}
+                  filename = {}
+                  # pickle.load
+                  with open(dataset.dirname + 'data/sub_sequences_list_10.pickle', 'rb') as fp:
+                      sub_sequences_list = pickle.load(fp)
 
-        start_time = time()
-        next_save = int(progress)
-        # val_costs = []
-        train_costs = []
-        current_train_cost = []
-        epochs = []
-        metrics = {name: [] for name in self.metrics.keys()}
-        filename = {}
+                  try:
+                      X, Y = self._prepare_input(sub_sequences_list)
+                      # history = self.model.fit_generator(batch_generator, epochs = min_iterations, steps_per_epoch= progress,
+                      #                                 validation_data = val_generator, validation_steps=1,
+                      #                                 # workers = 1, use_multiprocessing = True,
+                      #                                    verbose=2)
 
-        try:
-            # while time() - start_time < max_time and iterations < max_iter:
+                      history = self.model.fit(X, Y, epochs=min_iterations, batch_size = self.batch_size,
+                                                      # validation_data = val_generator, validation_steps=1,
+                                                      # workers = 1, use_multiprocessing = True,
+                                                         verbose=2)
 
-                # Train with a new batch
-                # try:
-            # batch = next(batch_generator)  # called prepare_input(sequence), yield X, Y
-            # X = batch[0]
-            # print(batch[0].shape)
-                #     # print('mini_batch generator', 'iteration =', iterations)
-                #     # self.model.fit(batch[0], batch[2])
-                #
-                #     cost = self.model.train_on_batch(batch[0],
-                #                                      batch[1])  # called prepare_input(sequence), yield X, Y
+                      cost = history.history['loss']
+                      print(cost)
+                      # outputs = self.model.predict_on_batch(batch[0])
+                      # print(output)
 
-            history = self.model.fit_generator(batch_generator, epochs = min_iterations, steps_per_epoch= int(progress),
-                                            validation_data = val_generator, validation_steps=100,
-                                            workers = int(max_iter), use_multiprocessing = True, verbose=2)
-            cost = history.history['loss']
+                      current_train_cost = cost
 
-                    # outputs = self.model.predict_on_batch(batch[0])
-                    # print(output)
-            print(cost)
+                      epochs=[start_time]
 
-            # if np.isnan(cost):
-            #     raise ValueError("Cost is NaN")
+                      # Average train cost
+                      train_costs.append(np.mean(current_train_cost))
+                      current_train_cost = []
 
-                # except StopIteration:
-                #     break
+                      # intermediate_model = Model(inputs=self.model.layers[0].input,
+                      # 						   outputs=[l.output for l in self.model.layers[1:]])
 
-            current_train_cost = cost
-            # print(current_train_cost)
+                      # intermediate_output = intermediate_model.predict(batch[0])
+                      # print(intermediate_output)
 
-            # Check if it is time to save the model
-            epochs=[time()-start_time]
+                      # Compute validation cost
+                      metrics = self._compute_validation_metrics(self.dataset, metrics)
 
-            # Average train cost
-            train_costs.append(np.mean(current_train_cost))
-            current_train_cost = []
+                      # Print info
+                      self._print_progress(iterations, epochs[-1], start_time, train_costs
+                                           , metrics, validation_metrics
+                                           )
+                      # Save model
+                      run_nb = len(train_costs) - 1
+                      if autosave == 'All':
+                          filename[run_nb] = save_dir + self.framework + "/" + self._get_model_filename(
+                              round(epochs[-1], 3))
+                          self._save(filename[run_nb])
+                      elif autosave == 'Best':
+                          pareto_runs = self.get_pareto_front(metrics, validation_metrics)
+                          if run_nb in pareto_runs:
+                              filename[run_nb] = save_dir + self.framework + "/" + self._get_model_filename(
+                                  round(epochs[-1], 3))
+                              self._save(filename[run_nb])
+                              to_delete = [r for r in filename if r not in pareto_runs]
+                              for run in to_delete:
+                                  try:
+                                      os.remove(filename[run])
+                                  except OSError:
+                                      print('Warning : Previous model could not be deleted')
+                                  del filename[run]
 
-            # intermediate_model = Model(inputs=self.model.layers[0].input,
-            # 						   outputs=[l.output for l in self.model.layers[1:]])
+                  except KeyboardInterrupt:
+                      print('Training interrupted')
 
-            # intermediate_output = intermediate_model.predict(batch[0])
-            # print(intermediate_output)
-
-            # Compute validation cost
-            metrics = self._compute_validation_metrics(self.dataset, metrics)
-
-            # Print info
-            self._print_progress(iterations, epochs[-1], start_time, train_costs
-                                 , metrics, validation_metrics
-                                 )
-            # Save model
-            run_nb = len(train_costs) - 1
-            if autosave == 'All':
-                filename[run_nb] = save_dir + self.framework + "/" + self._get_model_filename(
-                    round(epochs[-1], 3))
-                self._save(filename[run_nb])
-            elif autosave == 'Best':
-                pareto_runs = self.get_pareto_front(metrics, validation_metrics)
-                if run_nb in pareto_runs:
-                    filename[run_nb] = save_dir + self.framework + "/" + self._get_model_filename(
-                        round(epochs[-1], 3))
-                    self._save(filename[run_nb])
-                    to_delete = [r for r in filename if r not in pareto_runs]
-                    for run in to_delete:
-                        try:
-                            os.remove(filename[run])
-                        except OSError:
-                            print('Warning : Previous model could not be deleted')
-                        del filename[run]
-
-        except KeyboardInterrupt:
-            print('Training interrupted')
-
-        best_run = np.argmax(
-            np.array(metrics[validation_metrics[0]]) * self.metrics[validation_metrics[0]]['direction'])
-        return ({m: metrics[m][best_run] for m in self.metrics.keys()}, time() - start_time, filename[best_run])
-
-    def _gen_mini_batch(self, sequence_generator, test=False):
-        ''' Takes a sequence generator and produce a mini batch generator.
-		The mini batch have a size defined by self.batch_size, and have format of the input layer of the rnn.
-
-		test determines how the sequence is splitted between training and testing
-			test == False, the sequence is split randomly
-			test == True, the sequence is split in the middle
-
-		if test == False, max_reuse_sequence determines how many time a single sequence is used in the same batch.
-			with max_reuse_sequence = inf, one sequence will be used to make the whole batch (if the sequence is long enough)
-			with max_reuse_sequence = 1, each sequence is used only once in the batch
-		N.B. if test == True, max_reuse_sequence = 1 is used anyway
-		'''
-        i = 0
-        uid = []
-        while True:
-            j = 0
-            sequences = []
-            batch_size = self.batch_size
-            if test:
-                batch_size = 1
-            while j < batch_size:  # j : user order
-
-                sequence, user_id = next(sequence_generator)
-                uid.append(user_id)
-
-                # finds the lengths of the different subsequences
-                if not test:  # training set
-                    # seq_lengths = sorted(
-                    #     random.sample(range(2, len(sequence)),  # range
-                    #                   min([self.batch_size - j, len(sequence) - 2]))  # population
-                    # )
-                    seq_lengths = sorted(
-                        random.sample(range(2, len(sequence)),  # range
-                                      min([self.batch_size - j, len(sequence) - 2, len(sequence) // 10]))  # population
-                    )
-                    # print('called sequence generator', 'j =', j, 'user_id:', user_id,'seq_len=',len(sequence), 'seq_lengths =',len(seq_lengths))
-                elif self.iter:
-                    batch_size = len(sequence) - 1
-                    seq_lengths = list(range(1, len(sequence)))
-                else:  # validating set
-                    seq_lengths = [int(len(sequence) / 2)]  # half of len
-
-                skipped_seq = 0
-                for l in seq_lengths:
-                    l = min(self.max_length, l)
-                    start = np.random.randint(0, len(sequence))  # randomly choose a start position
-                    start = min(start, len(sequence) - l)
-                    target = self.target_selection(sequence[start + l:], test=test)
-                    # target is only for rnn with hinge, logit and logsig.
-                    # target = self.target_selection(sequence[l:], test=test)
-                    if len(target) == 0:
-                        skipped_seq += 1
-                        continue
-                    # start = max(0, l - self.max_length)  # sequences cannot be longer than self.max_length
-                    # print(target)
-                    sequences.append([user_id, sequence[start:start + l], target])
-                    # sequences.append([user_id, sequence[start:l], target])
-                # print([user_id, sequence[start:l], target])
-
-                j += len(seq_lengths) - skipped_seq
-            # print('final j=', j)
-            batch_sequences = sequences
-            # print(uid)
-            i+=1
-            if test:
-                yield self._prepare_input(sequences), [i[0] for i in sequence[seq_lengths[0]:]]
-            else:
-                yield self._prepare_input(sequences)
-
-
-    # def _gen_mini_batch(self, sequence_generator, test=False):
-    #     ''' Takes a sequence generator and produce a mini batch generator.
-    #     The mini batch have a size defined by self.batch_size, and have format of the input layer of the rnn.
-    #
-    #     test determines how the sequence is splitted between training and testing
-    #         test == False, the sequence is split randomly
-    #         test == True, the sequence is split in the middle
-    #
-    #     if test == False, max_reuse_sequence determines how many time a single sequence is used in the same batch.
-    #         with max_reuse_sequence = inf, one sequence will be used to make the whole batch (if the sequence is long enough)
-    #         with max_reuse_sequence = 1, each sequence is used only once in the batch
-    #     N.B. if test == True, max_reuse_sequence = 1 is used anyway
-    #     '''
-    #
-    #     while True:
-    #         j = 0
-    #         sequences = []
-    #         batch_size = self.batch_size
-    #         if test:
-    #             batch_size = 1
-    #         while j < batch_size:  # j : user order
-    #
-    #             sequence, user_id = next(sequence_generator)
-    #
-    #             # finds the lengths of the different subsequences
-    #             if not test:  # training set
-    #                 seq_lengths = sorted(
-    #                     random.sample(range(2, len(sequence)),  # range
-    #                                   min([self.batch_size - j, len(sequence) - 2]))  # population
-    #                 )
-    #             elif self.iter:
-    #                 batch_size = len(sequence) - 1
-    #                 seq_lengths = list(range(1, len(sequence)))
-    #             else:  # validating set
-    #                 seq_lengths = [int(len(sequence) / 2)]  # half of len
-    #
-    #             skipped_seq = 0
-    #             for l in seq_lengths:
-    #                 # target is only for rnn with hinge, logit and logsig.
-    #                 target = self.target_selection(sequence[l:], test=test)
-    #                 if len(target) == 0:
-    #                     skipped_seq += 1
-    #                     continue
-    #                 start = max(0, l - self.max_length)  # sequences cannot be longer than self.max_length
-    #                 # print(target)
-    #                 sequences.append([user_id, sequence[start:l], target])
-    #             # print([user_id, sequence[start:l], target])
-    #
-    #             j += len(seq_lengths) - skipped_seq
-    #
-    #         if test:
-    #             yield self._prepare_input(sequences), [i[0] for i in sequence[seq_lengths[0]:]]
-    #         else:
-    #             yield self._prepare_input(sequences)
+                  best_run = np.argmax(
+                      np.array(metrics[validation_metrics[0]]) * self.metrics[validation_metrics[0]]['direction'])
+                  return ({m: metrics[m][best_run] for m in self.metrics.keys()}, time() - start_time, filename[best_run])
 
     def _print_progress(self, iterations, epochs, start_time, train_costs
                         , metrics
