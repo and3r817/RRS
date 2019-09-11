@@ -160,18 +160,25 @@ class RNNBase(object):
                   # pickle.load
                   with open(dataset.dirname + 'data/sub_sequences_list_10.pickle', 'rb') as fp:
                       sub_sequences_list = pickle.load(fp)
+                  with open(dataset.dirname + 'data/validation_list_10.pickle', 'rb') as fp:
+                      val_list = pickle.load(fp)
 
                   try:
                       X, Y = self._prepare_input(sub_sequences_list)
-                      # history = self.model.fit_generator(batch_generator, epochs = min_iterations, steps_per_epoch= progress,
-                      #                                 validation_data = val_generator, validation_steps=1,
-                      #                                 # workers = 1, use_multiprocessing = True,
-                      #                                    verbose=2)
+                      val_X, val_Y = self._prepare_input(val_list)
+
+                      # ne = '{epoch:3.1f}'
+                      filepath=  save_dir + self.framework  + "/" + self._get_model_filename(round(epochs[-1], 3))+ "_" + '{epoch:03d}.hdf5'
+                      # filename[run_nb] = save_dir + self.framework + "/" + self._get_model_filename(
+                      #     round(epochs[-1], 3))
+                      checkpoint = ModelCheckpoint(filepath, verbose=1,
+                                                   monitor='val_loss', save_best_only=True, mode='auto')
 
                       history = self.model.fit(X, Y, epochs=min_iterations, batch_size = self.batch_size,
-                                                      # validation_data = val_generator, validation_steps=1,
+                                                      validation_data = (val_X, val_Y),callbacks=[checkpoint],
                                                       # workers = 1, use_multiprocessing = True,
-                                                         verbose=2)
+                                                         verbose=2
+                                               )
 
                       cost = history.history['loss']
                       print(cost)
