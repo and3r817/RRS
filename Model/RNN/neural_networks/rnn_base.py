@@ -130,109 +130,107 @@ class RNNBase(object):
         return np.where(is_efficient)[0].tolist()
 
     def train(self, dataset,
-                        autosave='Best',
-                        save_dir='',
-                        progress=2.0,
-                        min_iterations = 0,
-                        load_last_model=False,
-                        early_stopping=None,
-                        validation_metrics=['sps']):
+              max_time=np.inf,
+              progress=5000,
+              autosave='Best',
+              save_dir='',
+              min_iterations=0,
+              max_iter=4,
+              load_last_model=False,
+              early_stopping=None,
+              validation_metrics=['sps']):
 
-                  self.dataset = dataset
+        time1 = time()
+        self.dataset = dataset
 
-                  self.target_selection.set_dataset(dataset)
+        self.target_selection.set_dataset(dataset)
 
-                  if len(set(validation_metrics) & set(self.metrics.keys())) < len(validation_metrics):
-                      raise ValueError(
-                          'Incorrect validation metrics. Metrics must be chosen among: ' + ', '.join(self.metrics.keys()))
+        if len(set(validation_metrics) & set(self.metrics.keys())) < len(validation_metrics):
+            raise ValueError(
+                'Incorrect validation metrics. Metrics must be chosen among: ' + ', '.join(self.metrics.keys()))
 
-                  # Load last model if needed
-                  iterations = 0
+        # Load last model if needed
+        iterations = 0
+        epochs_offset = 0
+        if load_last_model:
+            epochs_offset = self.load_last(save_dir)
 
-                  start_time = time()
+        batch_generator = self._gen_mini_batch(self.sequence_noise(self.dataset.training_set()))
+        val_generator = self._gen_mini_batch(self.sequence_noise(self.dataset.validation_set()))
 
-                  # val_costs = []
-                  train_costs = []
-                  current_train_cost = []
-                  epochs = []
-                  metrics = {name: [] for name in self.metrics.keys()}
-                  filename = {}
-                  # pickle.load
-                  with open(dataset.dirname + 'data/sub_sequences_list_10.pickle', 'rb') as fp:
-                      sub_sequences_list = pickle.load(fp)
-                  with open(dataset.dirname + 'data/validation_list_10.pickle', 'rb') as fp:
-                      val_list = pickle.load(fp)
+        start_time = time()
+        next_save = int(progress)
+        # val_costs = []
+        train_costs = []
+        current_train_cost = []
+        epochs = []
+        metrics = {name: [] for name in self.metrics.keys()}
+        filename = {}
 
-                  try:
-                      X, Y = self._prepare_input(sub_sequences_list)
-                      val_X, val_Y = self._prepare_input(val_list)
+        try:
+            filepath = save_dir + self.framework + "/" + self._get_model_filename(
+                round(time() - time1, 3))
 
-                      # ne = '{epoch:3.1f}'
-                      filepath=  save_dir + self.framework  + "/" + self._get_model_filename(round(epochs[-1], 3))+ "_" + '{epoch:03d}.hdf5'
-                      # filename[run_nb] = save_dir + self.framework + "/" + self._get_model_filename(
-                      #     round(epochs[-1], 3))
-                      checkpoint = ModelCheckpoint(filepath, verbose=1,
-                                                   monitor='val_loss', save_best_only=True, mode='auto')
+            checkpoint = ModelCheckpoint(filepath, verbose=1,
+                                         monitor='val_loss', save_best_only=True, mode='auto')
 
-                      history = self.model.fit(X, Y, epochs=min_iterations, batch_size = self.batch_size,
-                                                      validation_data = (val_X, val_Y),callbacks=[checkpoint],
-                                                      # workers = 1, use_multiprocessing = True,
-                                                         verbose=2
-                                               )
+            history = self.model.fit_generator(batch_generator, epochs = min_iterations, steps_per_epoch= progress,
+                                            validation_data = val_generator, validation_steps=20,
+                                            # workers = 1, use_multiprocessing = True,
+                                               callbacks= [checkpoint],
+                                               verbose=2)
+            cost = history.history['loss']
+            print(cost)
 
-                      cost = history.history['loss']
-                      print(cost)
-                      # outputs = self.model.predict_on_batch(batch[0])
-                      # print(output)
+            current_train_cost = cost
+            # print(current_train_cost)
 
-                      current_train_cost = cost
+            # Check if it is time to save the model
+            epochs=[time()-start_time]
 
-                      epochs=[start_time]
+            # Average train cost
+            train_costs.append(np.mean(current_train_cost))
+            current_train_cost = []
 
-                      # Average train cost
-                      train_costs.append(np.mean(current_train_cost))
-                      current_train_cost = []
+            # intermediate_model = Model(inputs=self.model.layers[0].input,
+            #                outputs=[l.output for l in self.model.layers[1:]])
 
-                      # intermediate_model = Model(inputs=self.model.layers[0].input,
-                      # 						   outputs=[l.output for l in self.model.layers[1:]])
+            # intermediate_output = intermediate_model.predict(batch[0])
+            # print(intermediate_output)
 
-                      # intermediate_output = intermediate_model.predict(batch[0])
-                      # print(intermediate_output)
+            # Compute validation cost
+            metrics = self._compute_validation_metrics(self.dataset, metrics)
 
-                      # Compute validation cost
-                      metrics = self._compute_validation_metrics(self.dataset, metrics)
+            # Print info
+            self._print_progress(iterations, epochs[-1], start_time, train_costs
+                                 , metrics, validation_metrics
+                                 )
+            # Save model
+            run_nb = len(train_costs) - 1
+            if autosave == 'All':
+                filename[run_nb] = save_dir + self.framework + "/" + self._get_model_filename(
+                    round(epochs[-1], 3))
+                self._save(filename[run_nb])
+            elif autosave == 'Best':
+                pareto_runs = self.get_pareto_front(metrics, validation_metrics)
+                if run_nb in pareto_runs:
+                    filename[run_nb] = save_dir + self.framework + "/" + self._get_model_filename(
+                        round(epochs[-1], 3))
+                    self._save(filename[run_nb])
+                    to_delete = [r for r in filename if r not in pareto_runs]
+                    for run in to_delete:
+                        try:
+                            os.remove(filename[run])
+                        except OSError:
+                            print('Warning : Previous model could not be deleted')
+                        del filename[run]
 
-                      # Print info
-                      self._print_progress(iterations, epochs[-1], start_time, train_costs
-                                           , metrics, validation_metrics
-                                           )
-                      # Save model
-                      run_nb = len(train_costs) - 1
-                      if autosave == 'All':
-                          filename[run_nb] = save_dir + self.framework + "/" + self._get_model_filename(
-                              round(epochs[-1], 3))
-                          self._save(filename[run_nb])
-                      elif autosave == 'Best':
-                          pareto_runs = self.get_pareto_front(metrics, validation_metrics)
-                          if run_nb in pareto_runs:
-                              filename[run_nb] = save_dir + self.framework + "/" + self._get_model_filename(
-                                  round(epochs[-1], 3))
-                              self._save(filename[run_nb])
-                              to_delete = [r for r in filename if r not in pareto_runs]
-                              for run in to_delete:
-                                  try:
-                                      os.remove(filename[run])
-                                  except OSError:
-                                      print('Warning : Previous model could not be deleted')
-                                  del filename[run]
+        except KeyboardInterrupt:
+            print('Training interrupted')
 
-                  except KeyboardInterrupt:
-                      print('Training interrupted')
-
-                  best_run = np.argmax(
-                      np.array(metrics[validation_metrics[0]]) * self.metrics[validation_metrics[0]]['direction'])
-                  return ({m: metrics[m][best_run] for m in self.metrics.keys()}, time() - start_time, filename[best_run])
-
+        best_run = np.argmax(
+            np.array(metrics[validation_metrics[0]]) * self.metrics[validation_metrics[0]]['direction'])
+        return ({m: metrics[m][best_run] for m in self.metrics.keys()}, time() - start_time, filename[best_run])    
     def _print_progress(self, iterations, epochs, start_time, train_costs
                         , metrics
                         , validation_metrics
