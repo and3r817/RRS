@@ -68,7 +68,7 @@ A diversity_bias of 0 produces the normal behavior, with no bias.
 
         self.model = Sequential()
         if self.recurrent_layer.embedding_size > 0:
-            # embedding_matrix = np.genfromtxt('/Users/xun/Documents/Thesis/Improving-RNN-recommendation-model/Dataset/ks-cooks-1y/recipe_embedding.csv', delimiter=',')
+            # embedding_matrix = np.genfromtxt('/Users/xun/Documents/Thesis/Improving-RNN-recommendation-model/Dataset/ks-cooks-1y/embedding/recipe_embedding.csv', delimiter=',')
             # self.model.add(
             #     Embedding(self.n_items, embedding_matrix.shape[1], weights=[embedding_matrix], mask_zero=True,
             #               input_length=self.max_length, trainable=False))
