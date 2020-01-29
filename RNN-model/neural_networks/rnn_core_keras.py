@@ -59,6 +59,7 @@ class RNNCore(RNNBase):
 
 ### 1. INPUT MODULE
         if self.recurrent_layer.embedding_size > 0:
+<<<<<<< HEAD:RNN-model/neural_networks/rnn_core_keras.py
          # with embedding layer
             # choose the embedding method
             # without pre-trained embedding, learn own embedding through the training process
@@ -80,6 +81,13 @@ class RNNCore(RNNBase):
                 self.model.add(
                     Embedding(self.n_items, embedding_matrix.shape[1], weights=[embedding_matrix], mask_zero=True,
                               input_length=self.max_length, trainable=False))
+=======
+            # embedding_matrix = np.genfromtxt('/Users/xun/Documents/Thesis/Improving-RNN-recommendation-model/Dataset/ks-cooks-1y/embedding/recipe_embedding.csv', delimiter=',')
+            # self.model.add(
+            #     Embedding(self.n_items, embedding_matrix.shape[1], weights=[embedding_matrix], mask_zero=True,
+            #               input_length=self.max_length, trainable=False))
+            self.model.add(Embedding(self.n_items, self.recurrent_layer.embedding_size, input_length=self.max_length))
+>>>>>>> refs/remotes/origin/master:Model/RNN/neural_networks/rnn_oh_keras.py
             self.model.add(Masking(mask_value=0.0))
         # without embedding layer
         else:
