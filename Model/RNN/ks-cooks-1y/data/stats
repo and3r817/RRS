@@ -1,5 +1,0 @@
-set	n_users	n_items	n_interactions	longest_sequence	earliest_time	latest_time
-Full	6291	1477	235861	1192
-Train	5033	1477	187499	967
-Val	629	1441	23156	218
-Test	629	1469	25206	1192
